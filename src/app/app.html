@@ -30,7 +30,18 @@
 
   <ul class="mt-4">
     @for (task of tasks(); track task.id) {
-      <li class="">{{ task.title }}</li>
+      <div class="flex flex-row justify-between items-center border rounded-md p-4 mt-2">
+        <input
+          type="checkbox"
+          class="mr-2 h-4 w-4"
+          [checked]="task.completed"
+          (click)="toggleCompleted(task.id)"
+        />
+        <li class="flex-auto">{{ task.title }}</li>
+        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Editar</button>
+        <button class="bg-red-500 ml-2 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
+      </div>
+      
     }
   </ul>
 

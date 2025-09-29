@@ -44,9 +44,11 @@ export class App {
     this.newTaskTitle.set('');
   }
 
-  constructor() {
-    effect(() => {
-      console.log(this.newTaskTitle())
-    });
+  toggleCompleted(id: number): void {
+
+  }
+
+  deleteTask(id: number): void {
+
   }
 }
