@@ -1,4 +1,5 @@
 import { Component, computed, effect, Signal, signal, WritableSignal } from '@angular/core';
+import { NgClass } from '@angular/common';
 
 // 1. La "forma" de una tarea
 export interface Task {
@@ -9,7 +10,9 @@ export interface Task {
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [
+    NgClass
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -44,7 +47,33 @@ export class App {
     this.newTaskTitle.set('');
   }
 
+  /**
+   * Alterna el estado de completado de una tarea específica.
+   *
+   * Busca la tarea por su ID y cambia su propiedad `completed` al valor opuesto.
+   * Si la tarea no existe, no realiza ninguna modificación.
+   *
+   * @param id - El identificador único de la tarea a modificar
+   * @returns void
+   *
+   * @example
+   * ```typescript
+   * // Marca como completada (o no completada) la tarea con ID 2
+   * this.toggleCompleted(2);
+   * ```
+   */
   toggleCompleted(id: number): void {
+    this.tasks.update((tasks: Task[]): Task[] => {
+      const index: number = tasks.findIndex((task: Task): boolean => task.id === id );
+      if (index === -1) return tasks;
+
+      const updatedTasks: Task[] = [...tasks];
+      updatedTasks[index] = {...tasks[index], completed: !tasks[index].completed};
+      return updatedTasks;
+    });
+  }
+
+  constructor() {
 
   }
 

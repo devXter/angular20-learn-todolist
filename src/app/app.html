@@ -30,18 +30,32 @@
 
   <ul class="mt-4">
     @for (task of tasks(); track task.id) {
-      <div class="flex flex-row justify-between items-center border rounded-md p-4 mt-2">
-        <input
-          type="checkbox"
-          class="mr-2 h-4 w-4"
-          [checked]="task.completed"
-          (click)="toggleCompleted(task.id)"
-        />
-        <li class="flex-auto">{{ task.title }}</li>
-        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Editar</button>
+
+      <!-- tarea -->
+      <div class="flex flex-row justify-between items-center border rounded-md p-4 mt-2" [class]="{ 'bg-gray-100': task.completed }">
+        <label class="flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            class="sr-only peer"
+            [checked]="task.completed"
+            (change)="toggleCompleted(task.id)"
+          />
+
+          <!-- checkbox personalizado -->
+          <div class="relative w-6 h-6 mr-3 bg-white border-2 border-gray-300 rounded-md peer-checked:bg-blue-500 peer-checked:border-blue-500">
+            <!-- svg del check blanco -->
+            <svg class="absolute inset-0 w-4 h-4 text-white m-auto" [class.hidden]="!task.completed" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <li class="flex-auto" [ngClass]="{ 'line-through opacity-50 text-gray-500': task.completed }">{{ task.title }}</li>
+        </label>
+
+        <!-- botones -->
+        <button [disabled]="task.completed" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed">Editar</button>
         <button class="bg-red-500 ml-2 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
       </div>
-      
+
     }
   </ul>
 
