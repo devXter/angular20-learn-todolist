@@ -10,7 +10,7 @@
           placeholder="Agrega una nueva tarea"
           class="block flex-auto rounded-lg border border-gray-300 p-2"
           [value]="newTaskTitle()"
-          (input)="newTaskTitle.set($any($event.target).value.trim())"
+          (input)="newTaskTitle.set($any($event.target).value)"
           (keyup.enter)="addTask()"
         />
 
@@ -26,7 +26,7 @@
   </div>
 
   <ul class="mt-4">
-    @for (task of tasks(); track task.id) {
+    @for (task of allTasks(); track task.id) {
       <!-- tarea -->
       <div
         class="mt-2 flex flex-row items-center justify-between rounded-md border p-4"
