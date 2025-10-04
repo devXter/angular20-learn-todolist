@@ -1,61 +1,112 @@
-<main class="w-full max-w-md mx-auto p-4">
-  <h1 class="text-2xl font-bold text-center">Lista de tareas</h1>
+<main class="mx-auto w-full max-w-md p-4">
+  <h1 class="text-center text-2xl font-bold">Lista de tareas</h1>
 
-  <div class="flex flex-col gap-2 border rounded-md p-4 mt-2">
+  <div class="mt-2 flex flex-col gap-2 rounded-md border p-4">
     <label class="flex flex-col gap-2">
       <span class="text-xl font-bold">Agregar nueva tarea</span>
-      <div class="flex flex-row items-center justify-between w-full">
-
+      <div class="flex w-full flex-row items-center justify-between">
         <input
-          #inputTask
           type="text"
           placeholder="Agrega una nueva tarea"
-          class="flex-auto border block p-2 rounded-lg border-gray-300"
-          (input)="newTaskTitle.set(inputTask.value)"
-          (keyup.enter)="addTask(inputTask)"
+          class="block flex-auto rounded-lg border border-gray-300 p-2"
+          [value]="newTaskTitle()"
+          (input)="newTaskTitle.set($any($event.target).value.trim())"
+          (keyup.enter)="addTask()"
         />
 
         <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-3 rounded disabled:bg-gray-300 disabled:cursor-not-allowed"
+          class="ml-3 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-300"
           [disabled]="newTaskTitle() === ''"
-          (click)="addTask(inputTask)"
+          (click)="addTask()"
         >
           + Tarea
         </button>
-
       </div>
     </label>
   </div>
 
-
   <ul class="mt-4">
     @for (task of tasks(); track task.id) {
-
       <!-- tarea -->
-      <div class="flex flex-row justify-between items-center border rounded-md p-4 mt-2" [class]="{ 'bg-gray-100': task.completed }">
-        <label class="flex items-center cursor-pointer">
+      <div
+        class="mt-2 flex flex-row items-center justify-between rounded-md border p-4"
+        [class]="{ 'bg-gray-100': task.completed }"
+      >
+        <label class="flex cursor-pointer items-center">
           <input
             type="checkbox"
-            class="sr-only peer"
+            class="peer sr-only"
             [checked]="task.completed"
             (change)="toggleCompleted(task.id)"
           />
 
           <!-- checkbox personalizado -->
-          <div class="relative w-6 h-6 mr-3 bg-white border-2 border-gray-300 rounded-md peer-checked:bg-blue-500 peer-checked:border-blue-500">
+          <div
+            class="relative mr-3 h-6 w-6 rounded-md border-2 border-gray-300 bg-white peer-checked:border-blue-500 peer-checked:bg-blue-500"
+          >
             <!-- svg del check blanco -->
-            <svg class="absolute inset-0 w-4 h-4 text-white m-auto" [class.hidden]="!task.completed" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+            <svg
+              class="absolute inset-0 m-auto h-4 w-4 text-white"
+              [class.hidden]="!task.completed"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
             </svg>
           </div>
-          <li class="flex-auto" [ngClass]="{ 'line-through opacity-50 text-gray-500': task.completed }">{{ task.title }}</li>
+          <li
+            class="flex-auto"
+            [class.hidden]="isEditing()(task.id)"
+            [class.text-gray-500]="task.completed"
+            [class.line-through]="task.completed"
+            [class.opacity-50]="task.completed"
+          >
+            {{ task.title }}
+          </li>
         </label>
 
-        <!-- botones -->
-        <button [disabled]="task.completed" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-300 disabled:cursor-not-allowed">Editar</button>
-        <button class="bg-red-500 ml-2 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
+        @if (isEditing()(task.id)) {
+          <!-- modo edición -->
+          <input
+            type="text"
+            class="flex-auto rounded-lg border border-gray-300 p-2"
+            [value]="editingTaskTitle()"
+            (input)="editingTaskTitle.set($any($event.target).value.trim())"
+            (keyup.enter)="saveEditedTask()"
+          />
+          <button
+            class="ml-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+            (click)="saveEditedTask()"
+          >
+            Guardar
+          </button>
+          <button
+            class="ml-2 rounded bg-gray-500 px-4 py-2 font-bold text-white hover:bg-gray-700"
+            (click)="cancelEditing()"
+          >
+            Cancelar
+          </button>
+        } @else {
+          <!-- modo vista -->
+          <button
+            [disabled]="task.completed"
+            class="rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-700 disabled:cursor-not-allowed disabled:bg-gray-300"
+            (click)="startEditingTask(task)"
+          >
+            Editar
+          </button>
+          <button
+            class="ml-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+            (click)="deleteTask(task.id)"
+          >
+            Eliminar
+          </button>
+        }
       </div>
-
     }
   </ul>
 
