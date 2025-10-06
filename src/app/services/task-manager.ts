@@ -6,8 +6,8 @@ import { Task } from '../models/task';
 })
 export class TaskManager {
   private readonly tasks: WritableSignal<Task[]> = signal<Task[]>([
-    { id: 1, title: 'Hacer mis tares', completed: true },
-    { id: 2, title: 'Leer el libro de Lenguaje', completed: false },
+    { id: 1, title: 'Hacer mis tareas', completed: true },
+    { id: 2, title: 'Leer el libro', completed: false },
     { id: 3, title: 'Estudiar para las pruebas', completed: false },
   ]);
 
