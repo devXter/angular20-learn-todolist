@@ -1,114 +1,257 @@
-<main class="mx-auto w-full max-w-md p-4">
-  <h1 class="text-center text-2xl font-bold">Lista de tareas</h1>
-
-  <div class="mt-2 flex flex-col gap-2 rounded-md border p-4">
-    <label class="flex flex-col gap-2">
-      <span class="text-xl font-bold">Agregar nueva tarea</span>
-      <div class="flex w-full flex-row items-center justify-between">
-        <input
-          type="text"
-          placeholder="Agrega una nueva tarea"
-          class="block flex-auto rounded-lg border border-gray-300 p-2"
-          [value]="newTaskTitle()"
-          (input)="newTaskTitle.set($any($event.target).value)"
-          (keyup.enter)="addTask()"
-        />
-
-        <button
-          class="ml-3 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-300"
-          [disabled]="newTaskTitle() === ''"
-          (click)="addTask()"
-        >
-          + Tarea
-        </button>
-      </div>
-    </label>
-  </div>
-
-  <ul class="mt-4">
-    @for (task of allTasks(); track task.id) {
-      <!-- tarea -->
+<div
+     class="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 px-4 py-8 sm:px-6 lg:px-8">
+  <main class="mx-auto w-full max-w-3xl">
+    <!-- Header -->
+    <div class="mb-8 text-center">
       <div
-        class="mt-2 flex flex-row items-center justify-between rounded-md border p-4"
-        [class]="{ 'bg-gray-100': task.completed }"
-      >
-        <label class="flex cursor-pointer items-center">
-          <input
-            type="checkbox"
-            class="peer sr-only"
-            [checked]="task.completed"
-            (change)="toggleCompleted(task.id)"
-          />
+           class="mb-3 inline-block rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 p-3 shadow-lg">
+        <svg class="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
+          </path>
+        </svg>
+      </div>
+      <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+        Mi Lista de
+        <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Tareas</span>
+      </h1>
+      <p class="mt-2 text-lg text-gray-600">Organiza tu día de manera eficiente</p>
+    </div>
 
-          <!-- checkbox personalizado -->
-          <div
-            class="relative mr-3 h-6 w-6 rounded-md border-2 border-gray-300 bg-white peer-checked:border-blue-500 peer-checked:bg-blue-500"
-          >
-            <!-- svg del check blanco -->
+    <!-- Add Task Card -->
+    <div
+         class="mb-6 rounded-2xl bg-white p-6 shadow-xl transition-all duration-300 hover:shadow-2xl sm:p-8">
+      <label class="flex flex-col gap-4">
+        <div class="flex items-center gap-2">
+          <svg
+               class="h-6 w-6 text-indigo-600"
+               fill="none"
+               stroke="currentColor"
+               viewBox="0 0 24 24">
+            <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4v16m8-8H4"></path>
+          </svg>
+          <span class="text-xl font-bold text-gray-800">Nueva Tarea</span>
+        </div>
+
+        <div class="flex w-full flex-col gap-3 sm:flex-row">
+          <div class="relative flex-1">
+            <input
+                   type="text"
+                   placeholder="¿Qué necesitas hacer hoy?"
+                   class="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 focus:outline-none"
+                   [value]="newTaskTitle()"
+                   (input)="newTaskTitle.set($any($event.target).value)"
+                   (keyup.enter)="addTask()" />
+          </div>
+
+          <button
+                  class="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+                  [disabled]="newTaskTitle() === ''"
+                  (click)="addTask()">
             <svg
-              class="absolute inset-0 m-auto h-4 w-4 text-white"
-              [class.hidden]="!task.completed"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
+                 class="h-5 w-5 transition-transform duration-200 group-hover:rotate-90"
+                 fill="none"
+                 stroke="currentColor"
+                 viewBox="0 0 24 24">
               <path
-                fill-rule="evenodd"
-                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                clip-rule="evenodd"
-              ></path>
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4v16m8-8H4"></path>
+            </svg>
+            <span class="hidden sm:inline">Agregar</span>
+          </button>
+        </div>
+      </label>
+    </div>
+
+    <!-- Stats Card -->
+    <div
+         class="mb-6 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white shadow-xl">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="rounded-xl bg-white/20 p-3 backdrop-blur-sm">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
           </div>
-          <li
-            class="flex-auto"
-            [class.hidden]="isEditing()(task.id)"
-            [class.text-gray-500]="task.completed"
-            [class.line-through]="task.completed"
-            [class.opacity-50]="task.completed"
-          >
-            {{ task.title }}
-          </li>
-        </label>
+          <div>
+            <p class="text-sm font-medium text-indigo-100">Tareas Pendientes</p>
+            <p class="text-2xl font-bold">{{ remaining() }}</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <p class="text-sm font-medium text-indigo-100">Total de Tareas</p>
+          <p class="text-2xl font-bold">{{ allTasks().length }}</p>
+        </div>
+      </div>
+    </div>
 
-        @if (isEditing()(task.id)) {
-          <!-- modo edición -->
-          <input
-            type="text"
-            class="flex-auto rounded-lg border border-gray-300 p-2"
-            [value]="editingTaskTitle()"
-            (input)="editingTaskTitle.set($any($event.target).value.trim())"
-            (keyup.enter)="saveEditedTask()"
-          />
-          <button
-            class="ml-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
-            (click)="saveEditedTask()"
-          >
-            Guardar
-          </button>
-          <button
-            class="ml-2 rounded bg-gray-500 px-4 py-2 font-bold text-white hover:bg-gray-700"
-            (click)="cancelEditing()"
-          >
-            Cancelar
-          </button>
+    <!-- Tasks List -->
+    <div class="space-y-3">
+      @if (allTasks().length === 0) {
+      <!-- Empty State -->
+      <div class="rounded-2xl bg-white p-12 text-center shadow-xl">
+        <div class="mb-4 inline-block rounded-full bg-gray-100 p-6">
+          <svg
+               class="h-16 w-16 text-gray-400"
+               fill="none"
+               stroke="currentColor"
+               viewBox="0 0 24 24">
+            <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
+            </path>
+          </svg>
+        </div>
+        <h3 class="mb-2 text-xl font-bold text-gray-900">No hay tareas</h3>
+        <p class="text-gray-500">¡Comienza agregando tu primera tarea arriba!</p>
+      </div>
+      }
+
+      @for (task of allTasks(); track task.id) {
+      <div
+           class="group rounded-2xl bg-white p-5 shadow-lg transition-all duration-300 hover:shadow-xl sm:p-6"
+           [class.bg-gradient-to-r]="task.completed"
+           [class.from-emerald-50]="task.completed"
+           [class.to-teal-50]="task.completed">
+        @if (!isEditing()(task.id)) {
+        <!-- Vista Normal -->
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <label class="flex flex-1 cursor-pointer items-start gap-4">
+            <input
+                   type="checkbox"
+                   class="peer sr-only"
+                   [checked]="task.completed"
+                   (change)="toggleCompleted(task.id)" />
+
+            <!-- Custom Checkbox -->
+            <div
+                 class="relative mt-1 h-6 w-6 shrink-0 rounded-lg border-2 transition-all duration-200"
+                 [class.border-gray-300]="!task.completed"
+                 [class.bg-white]="!task.completed"
+                 [class.border-emerald-500]="task.completed"
+                 [class.bg-emerald-500]="task.completed">
+              <svg
+                   class="absolute inset-0 m-auto h-4 w-4 text-white transition-all duration-200"
+                   [class.scale-0]="!task.completed"
+                   [class.scale-100]="task.completed"
+                   fill="currentColor"
+                   viewBox="0 0 20 20">
+                <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"></path>
+              </svg>
+            </div>
+
+            <span
+                  class="flex-1 text-lg transition-all duration-200"
+                  [class.text-gray-900]="!task.completed"
+                  [class.font-medium]="!task.completed"
+                  [class.text-emerald-700]="task.completed"
+                  [class.line-through]="task.completed">
+              {{ task.title }}
+            </span>
+          </label>
+
+          <!-- Action Buttons -->
+          <div class="flex gap-2 sm:ml-4">
+            <button
+                    [disabled]="task.completed"
+                    class="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:from-gray-300 disabled:to-gray-400 disabled:hover:scale-100"
+                    (click)="startEditingTask(task)">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                </path>
+              </svg>
+              <span class="hidden sm:inline">Editar</span>
+            </button>
+            <button
+                    class="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                    (click)="deleteTask(task.id)">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                </path>
+              </svg>
+              <span class="hidden sm:inline">Eliminar</span>
+            </button>
+          </div>
+        </div>
         } @else {
-          <!-- modo vista -->
-          <button
-            [disabled]="task.completed"
-            class="rounded bg-yellow-500 px-4 py-2 font-bold text-white hover:bg-yellow-700 disabled:cursor-not-allowed disabled:bg-gray-300"
-            (click)="startEditingTask(task)"
-          >
-            Editar
-          </button>
-          <button
-            class="ml-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-            (click)="deleteTask(task.id)"
-          >
-            Eliminar
-          </button>
+        <!-- Modo Edición -->
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <input
+                 type="text"
+                 class="flex-1 rounded-xl border-2 border-indigo-300 bg-white px-4 py-3 text-gray-900 transition-all duration-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none"
+                 [value]="editingTaskTitle()"
+                 (input)="editingTaskTitle.set($any($event.target).value.trim())"
+                 (keyup.enter)="saveEditedTask()" />
+          <div class="flex gap-2">
+            <button
+                    class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                    (click)="saveEditedTask()">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Guardar</span>
+            </button>
+            <button
+                    class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-500 to-gray-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                    (click)="cancelEditing()">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+              <span>Cancelar</span>
+            </button>
+          </div>
+        </div>
         }
       </div>
-    }
-  </ul>
+      }
+    </div>
 
-  <p class="mt-4">Tareas restantes: {{ remaining() }}</p>
-</main>
+    <!-- Footer -->
+    <div class="mt-8 text-center text-sm text-gray-600">
+      <p>
+        Creado con <span class="text-red-500">❤️</span> usando
+        <span class="font-semibold text-gray-800">Angular 20</span> +
+        <span class="font-semibold text-gray-800">Tailwind CSS v4</span>
+      </p>
+      <p class="mt-1">
+        <span class="text-gray-400">by</span>
+        <span
+              class="ml-1 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text font-semibold text-transparent">DevXter</span>
+      </p>
+    </div>
+  </main>
+</div>
