@@ -6,9 +6,9 @@ import { Task } from '../models/task';
 })
 export class TaskManager {
   private readonly tasks: WritableSignal<Task[]> = signal<Task[]>([
-    { id: 1, title: 'Aprende Signals', completed: true },
-    { id: 2, title: 'Crear To-Do App', completed: false },
-    { id: 3, title: 'Dominar Angular', completed: false },
+    { id: 1, title: 'Hacer mis tares', completed: true },
+    { id: 2, title: 'Leer el libro de Lenguaje', completed: false },
+    { id: 3, title: 'Estudiar para las pruebas', completed: false },
   ]);
 
   readonly allTasks: Signal<Task[]> = this.tasks.asReadonly();
