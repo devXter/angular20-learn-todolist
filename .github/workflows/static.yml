@@ -22,8 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Build job
-  build:
+  unit-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -39,6 +38,20 @@ jobs:
 
       - name: Run unit tests
         run: bun run bun:test
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
       - name: Build Angular app
         run: bun run build -- --base-href=/angular20-learn-todolist/
