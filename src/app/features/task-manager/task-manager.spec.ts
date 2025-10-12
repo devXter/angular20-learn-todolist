@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 import { TaskManager } from './task-manager';
 
@@ -9,6 +10,7 @@ describe('TaskManager', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TaskManager],
+      providers: [provideZonelessChangeDetection()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaskManager);
