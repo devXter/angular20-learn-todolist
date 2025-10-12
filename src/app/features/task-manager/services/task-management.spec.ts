@@ -1,16 +1,40 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 
 import { TaskManagement } from './task-management';
 import { Task } from '../models/task';
+import { LocalStorage } from '../../../core/services/local-storage';
 
 describe('TaskManagement', () => {
   let service: TaskManagement;
+  let localStorageSpy: {
+    getItem: ReturnType<typeof vi.fn>;
+    setItem: ReturnType<typeof vi.fn>;
+    removeItem: ReturnType<typeof vi.fn>;
+  };
+  let storedTasks: Task[] | null;
 
   beforeEach(() => {
+    // Mock de LocalStorage
+    storedTasks = null;
+
+    localStorageSpy = {
+      getItem: vi.fn(() => storedTasks),
+      setItem: vi.fn((key: string, value: Task[]) => {
+        storedTasks = value;
+      }),
+      removeItem: vi.fn(),
+    };
+
     TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()],
+      providers: [
+        provideZonelessChangeDetection(),
+        TaskManagement,
+        { provide: LocalStorage, useValue: localStorageSpy },
+      ],
     });
+
     service = TestBed.inject(TaskManagement);
   });
 
@@ -259,6 +283,93 @@ describe('TaskManagement', () => {
       // Assert
       const afterTasks: Task[] = service.allTasks();
       expect(afterTasks).toEqual(beforeTasks);
+    });
+  });
+
+  describe('LocalStorage Persistence', () => {
+    it('should load tasks from localStorage on initialization', () => {
+      // Assert
+      expect(localStorageSpy.getItem).toHaveBeenCalledWith('tasks');
+    });
+
+    it('should persist tasks after adding a new task', () => {
+      // Arrange
+      const initialCallCount = localStorageSpy.setItem.mock.calls.length;
+      const newTaskTitle = 'Nueva tarea para persistir';
+
+      // Act
+      service.addTask(newTaskTitle);
+      TestBed.flushEffects();
+
+      // Assert
+      expect(localStorageSpy.setItem).toHaveBeenCalledWith('tasks', service.allTasks());
+      expect(localStorageSpy.setItem.mock.calls.length).toBe(initialCallCount + 1);
+    });
+
+    it('should persist tasks after toggling completion status', () => {
+      // Arrange
+      const taskToToggle: Task = service.allTasks()[0];
+      const initialCallCount = localStorageSpy.setItem.mock.calls.length;
+
+      // Act
+      service.toggleCompleted(taskToToggle.id);
+      TestBed.flushEffects();
+
+      // Assert
+      expect(localStorageSpy.setItem).toHaveBeenCalledWith('tasks', service.allTasks());
+      expect(localStorageSpy.setItem.mock.calls.length).toBe(initialCallCount + 1);
+    });
+
+    it('should persist tasks after deleting a task', () => {
+      // Arrange
+      const taskToDelete: Task = service.allTasks()[0];
+      const initialCallCount = localStorageSpy.setItem.mock.calls.length;
+
+      // Act
+      service.deleteTask(taskToDelete.id);
+      TestBed.flushEffects();
+
+      // Assert
+      expect(localStorageSpy.setItem).toHaveBeenCalledWith('tasks', service.allTasks());
+      expect(localStorageSpy.setItem.mock.calls.length).toBe(initialCallCount + 1);
+    });
+
+    it('should persist tasks after updating a task', () => {
+      // Arrange
+      const taskToUpdate: Task = service.allTasks()[0];
+      const initialCallCount = localStorageSpy.setItem.mock.calls.length;
+      const newTitle = 'Título actualizado';
+
+      // Act
+      service.updateTask(taskToUpdate.id, newTitle);
+      TestBed.flushEffects();
+
+      // Assert
+      expect(localStorageSpy.setItem).toHaveBeenCalledWith('tasks', service.allTasks());
+      expect(localStorageSpy.setItem.mock.calls.length).toBe(initialCallCount + 1);
+    });
+
+    it('should not persist when add task fails due to empty title', () => {
+      // Arrange
+      const initialCallCount = localStorageSpy.setItem.mock.calls.length;
+
+      // Act
+      service.addTask('');
+
+      // Assert
+      expect(localStorageSpy.setItem.mock.calls.length).toBe(initialCallCount);
+    });
+
+    it('should not persist when update task fails due to empty title', () => {
+      // Arrange
+      const taskToUpdate: Task = service.allTasks()[0];
+      const initialCallCount = localStorageSpy.setItem.mock.calls.length;
+
+      // Act
+      service.updateTask(taskToUpdate.id, '');
+
+      // Assert
+      expect(localStorageSpy.setItem.mock.calls.length).toBe(initialCallCount);
     });
   });
 });
