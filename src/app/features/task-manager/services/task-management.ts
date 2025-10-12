@@ -1,10 +1,8 @@
 import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { Task } from '../models/task';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class TaskManager {
+@Injectable()
+export class TaskManagement {
   private readonly tasks: WritableSignal<Task[]> = signal<Task[]>([
     { id: 1, title: 'Hacer mis tareas', completed: true },
     { id: 2, title: 'Leer el libro', completed: false },

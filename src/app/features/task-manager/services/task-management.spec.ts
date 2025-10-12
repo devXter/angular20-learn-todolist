@@ -1,17 +1,17 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { TaskManager } from './task-manager';
+import { TaskManagement } from './task-management';
 import { Task } from '../models/task';
 
-describe('TaskManager', () => {
-  let service: TaskManager;
+describe('TaskManagement', () => {
+  let service: TaskManagement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideZonelessChangeDetection()],
     });
-    service = TestBed.inject(TaskManager);
+    service = TestBed.inject(TaskManagement);
   });
 
   it('should be created', () => {
