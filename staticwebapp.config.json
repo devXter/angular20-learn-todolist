@@ -1,1 +1,8 @@
-{}
+{
+  "routes": [
+    {
+      "route": "tasks",
+      "redirect": "tasks"
+    }
+  ]
+}
