@@ -1,72 +1,87 @@
 <!-- Add Task Card -->
 <section
-         class="mb-6 rounded-2xl bg-white p-6 shadow-xl transition-all duration-300 hover:shadow-2xl sm:p-8">
+  class="mb-6 rounded-2xl bg-white p-6 shadow-xl transition-all duration-300 hover:shadow-2xl sm:p-8"
+>
   <label class="flex flex-col gap-4">
-    <div class="flex items-center gap-2">
+    <div class="sel flex items-center gap-2">
       <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4v16m8-8H4"></path>
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 4v16m8-8H4"
+        ></path>
       </svg>
       <span class="text-xl font-bold text-gray-800">Nueva Tarea</span>
     </div>
 
     <div class="flex w-full flex-col gap-3">
       <div class="flex flex-col gap-3 sm:flex-row">
-        <div class="relative flex-1">
+        <div class="flex-1 sm:self-end">
           <input
-                 type="text"
-                 placeholder="¿Qué necesitas hacer hoy?"
-                 class="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 focus:outline-none"
-                 [value]="newTaskTitle()"
-                 (input)="newTaskTitle.set($any($event.target).value)"
-                 (keyup.enter)="addTask()" />
+            type="text"
+            placeholder="¿Qué necesitas hacer hoy?"
+            class="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 focus:outline-none"
+            [value]="newTaskTitle()"
+            (input)="newTaskTitle.set($any($event.target).value)"
+            (keyup.enter)="addTask()"
+          />
         </div>
 
-        <div class="relative flex-1 sm:flex-none sm:w-56">
+        <div class="relative flex-1 sm:w-56 sm:flex-none">
           <label class="flex flex-col gap-2">
             <span class="flex items-center gap-2 text-sm font-medium text-gray-700">
-              <svg class="h-4 w-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                class="h-4 w-4 text-indigo-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
               </svg>
               Fecha de vencimiento
             </span>
             <input
-                   type="date"
-                   class="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 focus:outline-none"
-                   [value]="newTaskDueDate()"
-                   (input)="newTaskDueDate.set($any($event.target).value)"
-                   (keyup.enter)="addTask()" />
+              type="date"
+              class="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 focus:outline-none"
+              [value]="newTaskDueDate()"
+              (input)="newTaskDueDate.set($any($event.target).value)"
+              (keyup.enter)="addTask()"
+            />
           </label>
         </div>
 
         <button
-                class="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
-                [disabled]="newTaskTitle() === ''"
-                (click)="addTask()">
+          class="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 sm:h-14 sm:self-end"
+          [disabled]="newTaskTitle() === ''"
+          (click)="addTask()"
+        >
           <svg
-               class="h-5 w-5 transition-transform duration-200 group-hover:rotate-90"
-               fill="none"
-               stroke="currentColor"
-               viewBox="0 0 24 24">
+            class="h-5 w-5 transition-transform duration-200 group-hover:rotate-90"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 4v16m8-8H4"></path>
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            ></path>
           </svg>
           <span class="hidden sm:inline">Agregar</span>
         </button>
       </div>
       <p class="text-sm text-gray-500">
         <span class="inline sm:hidden">💡 La fecha es opcional</span>
-        <span class="hidden sm:inline">💡 Puedes agregar una fecha de vencimiento opcional para tu tarea</span>
+        <span class="hidden sm:inline"
+          >💡 Puedes agregar una fecha de vencimiento opcional para tu tarea</span
+        >
       </p>
     </div>
   </label>
@@ -74,16 +89,18 @@
 
 <!-- Stats Card -->
 <section
-         class="mb-6 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white shadow-xl">
+  class="mb-6 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white shadow-xl"
+>
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
       <div class="rounded-xl bg-white/20 p-3 backdrop-blur-sm">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
         </svg>
       </div>
       <div>
@@ -104,33 +121,36 @@
     <!-- Tabs -->
     <div class="flex gap-2 rounded-xl bg-gray-100 p-1">
       <button
-              class="rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
-              [class.bg-white]="activeTab() === 'all'"
-              [class.text-indigo-600]="activeTab() === 'all'"
-              [class.shadow-md]="activeTab() === 'all'"
-              [class.text-gray-600]="activeTab() !== 'all'"
-              [class.hover:text-gray-900]="activeTab() !== 'all'"
-              (click)="setActiveTab('all')">
+        class="rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
+        [class.bg-white]="activeTab() === 'all'"
+        [class.text-indigo-600]="activeTab() === 'all'"
+        [class.shadow-md]="activeTab() === 'all'"
+        [class.text-gray-600]="activeTab() !== 'all'"
+        [class.hover:text-gray-900]="activeTab() !== 'all'"
+        (click)="setActiveTab('all')"
+      >
         Todas
       </button>
       <button
-              class="rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
-              [class.bg-white]="activeTab() === 'active'"
-              [class.text-indigo-600]="activeTab() === 'active'"
-              [class.shadow-md]="activeTab() === 'active'"
-              [class.text-gray-600]="activeTab() !== 'active'"
-              [class.hover:text-gray-900]="activeTab() !== 'active'"
-              (click)="setActiveTab('active')">
+        class="rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
+        [class.bg-white]="activeTab() === 'active'"
+        [class.text-indigo-600]="activeTab() === 'active'"
+        [class.shadow-md]="activeTab() === 'active'"
+        [class.text-gray-600]="activeTab() !== 'active'"
+        [class.hover:text-gray-900]="activeTab() !== 'active'"
+        (click)="setActiveTab('active')"
+      >
         Activas
       </button>
       <button
-              class="rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
-              [class.bg-white]="activeTab() === 'completed'"
-              [class.text-indigo-600]="activeTab() === 'completed'"
-              [class.shadow-md]="activeTab() === 'completed'"
-              [class.text-gray-600]="activeTab() !== 'completed'"
-              [class.hover:text-gray-900]="activeTab() !== 'completed'"
-              (click)="setActiveTab('completed')">
+        class="rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
+        [class.bg-white]="activeTab() === 'completed'"
+        [class.text-indigo-600]="activeTab() === 'completed'"
+        [class.shadow-md]="activeTab() === 'completed'"
+        [class.text-gray-600]="activeTab() !== 'completed'"
+        [class.hover:text-gray-900]="activeTab() !== 'completed'"
+        (click)="setActiveTab('completed')"
+      >
         Completadas
       </button>
     </div>
@@ -139,15 +159,17 @@
     <div class="flex items-center gap-2">
       <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path>
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
+        ></path>
       </svg>
       <select
-              class="rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-900 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 focus:outline-none"
-              [value]="sortBy()"
-              (change)="setSortBy($any($event.target).value)">
+        class="rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-900 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 focus:outline-none"
+        [value]="sortBy()"
+        (change)="setSortBy($any($event.target).value)"
+      >
         <option value="dueDate">Fecha de vencimiento</option>
         <option value="createdAt">Fecha de creación</option>
         <option value="title">Alfabético</option>
@@ -159,193 +181,211 @@
 <!-- Tasks List -->
 <section class="space-y-3">
   @if (filteredAndSortedTasks().length === 0) {
-  <!-- Empty State -->
-  <div class="rounded-2xl bg-white p-12 text-center shadow-xl">
-    <div class="mb-4 inline-block rounded-full bg-gray-100 p-6">
-      <svg class="h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
-        </path>
-      </svg>
+    <!-- Empty State -->
+    <div class="rounded-2xl bg-white p-12 text-center shadow-xl">
+      <div class="mb-4 inline-block rounded-full bg-gray-100 p-6">
+        <svg class="h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+          ></path>
+        </svg>
+      </div>
+      <h3 class="mb-2 text-xl font-bold text-gray-900">No hay tareas</h3>
+      <p class="text-gray-500">¡Comienza agregando tu primera tarea arriba!</p>
     </div>
-    <h3 class="mb-2 text-xl font-bold text-gray-900">No hay tareas</h3>
-    <p class="text-gray-500">¡Comienza agregando tu primera tarea arriba!</p>
-  </div>
   }
 
   @for (task of filteredAndSortedTasks(); track task.id) {
-  <div
-       class="group rounded-2xl bg-white p-5 shadow-lg transition-all duration-300 hover:shadow-xl sm:p-6"
-       [class.bg-gradient-to-r]="task.completed"
-       [class.from-emerald-50]="task.completed"
-       [class.to-teal-50]="task.completed"
-       [class.border-l-8]="isOverdue()(task)"
-       [class.border-red-500]="isOverdue()(task)"
-       [class.!bg-red-50]="isOverdue()(task)">
-    @if (!isEditing()(task.id)) {
-    <!-- Vista Normal -->
-    <div class="flex flex-col gap-4">
-      <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <label class="flex flex-1 cursor-pointer items-start gap-4">
-          <input
-                 type="checkbox"
-                 class="peer sr-only"
-                 [checked]="task.completed"
-                 (change)="toggleCompleted(task.id)" />
+    <div
+      class="group rounded-2xl bg-white p-5 shadow-lg transition-all duration-300 hover:shadow-xl sm:p-6"
+      [class.bg-gradient-to-r]="task.completed"
+      [class.from-emerald-50]="task.completed"
+      [class.to-teal-50]="task.completed"
+      [class.border-l-8]="isOverdue()(task)"
+      [class.border-red-500]="isOverdue()(task)"
+      [class.!bg-red-50]="isOverdue()(task)"
+    >
+      @if (!isEditing()(task.id)) {
+        <!-- Vista Normal -->
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <label class="flex flex-1 cursor-pointer items-start gap-4">
+              <input
+                type="checkbox"
+                class="peer sr-only"
+                [checked]="task.completed"
+                (change)="toggleCompleted(task.id)"
+              />
 
-          <!-- Custom Checkbox -->
-          <div
-               class="relative mt-1 h-6 w-6 shrink-0 rounded-lg border-2 transition-all duration-200"
-               [class.border-gray-300]="!task.completed"
-               [class.bg-white]="!task.completed"
-               [class.border-emerald-500]="task.completed"
-               [class.bg-emerald-500]="task.completed">
-            <svg
-                 class="absolute inset-0 m-auto h-4 w-4 text-white transition-all duration-200"
-                 [class.scale-0]="!task.completed"
-                 [class.scale-100]="task.completed"
-                 fill="currentColor"
-                 viewBox="0 0 20 20">
-              <path
+              <!-- Custom Checkbox -->
+              <div
+                class="relative mt-1 h-6 w-6 shrink-0 rounded-lg border-2 transition-all duration-200"
+                [class.border-gray-300]="!task.completed"
+                [class.bg-white]="!task.completed"
+                [class.border-emerald-500]="task.completed"
+                [class.bg-emerald-500]="task.completed"
+              >
+                <svg
+                  class="absolute inset-0 m-auto h-4 w-4 text-white transition-all duration-200"
+                  [class.scale-0]="!task.completed"
+                  [class.scale-100]="task.completed"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
                     fill-rule="evenodd"
                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"></path>
-            </svg>
-          </div>
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
 
-          <div class="flex-1">
-            <div class="flex flex-col gap-2">
-              <div class="flex items-start gap-2">
-                <span
+              <div class="flex-1">
+                <div class="flex flex-col gap-2">
+                  <div class="flex items-start gap-2">
+                    <span
                       class="flex-1 text-lg transition-all duration-200"
                       [class.text-gray-900]="!task.completed"
                       [class.font-medium]="!task.completed"
                       [class.text-emerald-700]="task.completed"
-                      [class.line-through]="task.completed">
-                  {{ task.title }}
-                </span>
+                      [class.line-through]="task.completed"
+                    >
+                      {{ task.title }}
+                    </span>
 
-                <!-- Badge Vencida -->
-                @if (isOverdue()(task)) {
-                <span class="flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white">
-                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
+                    <!-- Badge Vencida -->
+                    @if (isOverdue()(task)) {
+                      <span
+                        class="flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white"
+                      >
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                          ></path>
+                        </svg>
+                        Vencida
+                      </span>
+                    }
+                  </div>
+
+                  <!-- Fechas -->
+                  <div class="flex flex-wrap gap-3 text-xs text-gray-500">
+                    <div class="flex items-center gap-1">
+                      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
                           stroke-linecap="round"
                           stroke-linejoin="round"
                           stroke-width="2"
-                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-                    </path>
-                  </svg>
-                  Vencida
-                </span>
-                }
-              </div>
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path>
+                      </svg>
+                      <span>Creada: {{ formatDateShort(task.createdAt) }}</span>
+                    </div>
 
-              <!-- Fechas -->
-              <div class="flex flex-wrap gap-3 text-xs text-gray-500">
-                <div class="flex items-center gap-1">
-                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <span>Creada: {{ formatDateShort(task.createdAt) }}</span>
+                    @if (task.dueDate) {
+                      <div
+                        class="flex items-center gap-1"
+                        [class.text-red-600]="isOverdue()(task)"
+                        [class.font-semibold]="isOverdue()(task)"
+                      >
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                          ></path>
+                        </svg>
+                        <span>Vence: {{ formatDateShort(task.dueDate) }}</span>
+                      </div>
+                    }
+                  </div>
                 </div>
-
-                @if (task.dueDate) {
-                <div
-                     class="flex items-center gap-1"
-                     [class.text-red-600]="isOverdue()(task)"
-                     [class.font-semibold]="isOverdue()(task)">
-                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                  </svg>
-                  <span>Vence: {{ formatDateShort(task.dueDate) }}</span>
-                </div>
-                }
               </div>
+            </label>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-2 sm:ml-4">
+              <button
+                [disabled]="task.completed"
+                class="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:from-gray-300 disabled:to-gray-400 disabled:hover:scale-100"
+                (click)="startEditingTask(task)"
+              >
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                  ></path>
+                </svg>
+                <span class="hidden sm:inline">Editar</span>
+              </button>
+              <button
+                class="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                (click)="deleteTask(task.id)"
+              >
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  ></path>
+                </svg>
+                <span class="hidden sm:inline">Eliminar</span>
+              </button>
             </div>
           </div>
-        </label>
-
-        <!-- Action Buttons -->
-        <div class="flex gap-2 sm:ml-4">
-          <button
-                  [disabled]="task.completed"
-                  class="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:from-gray-300 disabled:to-gray-400 disabled:hover:scale-100"
-                  (click)="startEditingTask(task)">
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-              </path>
-            </svg>
-            <span class="hidden sm:inline">Editar</span>
-          </button>
-          <button
-                  class="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
-                  (click)="deleteTask(task.id)">
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-              </path>
-            </svg>
-            <span class="hidden sm:inline">Eliminar</span>
-          </button>
         </div>
-      </div>
-    </div>
-    } @else {
-    <!-- Modo Edición -->
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-      <input
-             type="text"
-             class="flex-1 rounded-xl border-2 border-indigo-300 bg-white px-4 py-3 text-gray-900 transition-all duration-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none"
-             [value]="editingTaskTitle()"
-             (input)="editingTaskTitle.set($any($event.target).value.trim())"
-             (keyup.enter)="saveEditedTask()" />
-      <div class="flex gap-2">
-        <button
-                class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
-                (click)="saveEditedTask()">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
+      } @else {
+        <!-- Modo Edición -->
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <input
+            type="text"
+            class="flex-1 rounded-xl border-2 border-indigo-300 bg-white px-4 py-3 text-gray-900 transition-all duration-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none"
+            [value]="editingTaskTitle()"
+            (input)="editingTaskTitle.set($any($event.target).value.trim())"
+            (keyup.enter)="saveEditedTask()"
+          />
+          <div class="flex gap-2">
+            <button
+              class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+              (click)="saveEditedTask()"
+            >
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M5 13l4 4L19 7"></path>
-          </svg>
-          <span>Guardar</span>
-        </button>
-        <button
-                class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-500 to-gray-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
-                (click)="cancelEditing()">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
+                  d="M5 13l4 4L19 7"
+                ></path>
+              </svg>
+              <span>Guardar</span>
+            </button>
+            <button
+              class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-500 to-gray-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+              (click)="cancelEditing()"
+            >
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-          <span>Cancelar</span>
-        </button>
-      </div>
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+              <span>Cancelar</span>
+            </button>
+          </div>
+        </div>
+      }
     </div>
-    }
-  </div>
   }
 </section>
