@@ -4,13 +4,8 @@
 >
   <label class="flex flex-col gap-4">
     <div class="sel flex items-center gap-2">
-      <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 4v16m8-8H4"
-        ></path>
+      <svg class="h-6 w-6 text-indigo-600" aria-hidden="true">
+        <use href="/icons.svg#icon-plus"></use>
       </svg>
       <span class="text-xl font-bold text-gray-800">Nueva Tarea</span>
     </div>
@@ -31,18 +26,8 @@
         <div class="relative flex-1 sm:w-56 sm:flex-none">
           <label class="flex flex-col gap-2">
             <span class="flex items-center gap-2 text-sm font-medium text-gray-700">
-              <svg
-                class="h-4 w-4 text-indigo-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
+              <svg class="h-4 w-4 text-indigo-600" aria-hidden="true">
+                <use href="/icons.svg#icon-calendar"></use>
               </svg>
               Fecha de vencimiento
             </span>
@@ -63,16 +48,9 @@
         >
           <svg
             class="h-5 w-5 transition-transform duration-200 group-hover:rotate-90"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+            aria-hidden="true"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4v16m8-8H4"
-            ></path>
+            <use href="/icons.svg#icon-plus"></use>
           </svg>
           <span class="hidden sm:inline">Agregar</span>
         </button>
@@ -94,13 +72,8 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
       <div class="rounded-xl bg-white/20 p-3 backdrop-blur-sm">
-        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
+        <svg class="h-6 w-6" aria-hidden="true">
+          <use href="/icons.svg#icon-check-circle"></use>
         </svg>
       </div>
       <div>
@@ -157,13 +130,8 @@
 
     <!-- Sort Selector -->
     <div class="flex items-center justify-end gap-2">
-      <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
-        ></path>
+      <svg class="h-5 w-5 text-gray-600" aria-hidden="true">
+        <use href="/icons.svg#icon-sort"></use>
       </svg>
       <select
         class="rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-900 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 focus:outline-none"
@@ -184,13 +152,8 @@
     <!-- Empty State -->
     <div class="rounded-2xl bg-white p-12 text-center shadow-xl">
       <div class="mb-4 inline-block rounded-full bg-gray-100 p-6">
-        <svg class="h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-          ></path>
+        <svg class="h-16 w-16 text-gray-400" aria-hidden="true">
+          <use href="/icons.svg#icon-empty-box"></use>
         </svg>
       </div>
       <h3 class="mb-2 text-xl font-bold text-gray-900">No hay tareas</h3>
@@ -232,14 +195,9 @@
                   class="absolute inset-0 m-auto h-4 w-4 text-white transition-all duration-200"
                   [class.scale-0]="!task.completed"
                   [class.scale-100]="task.completed"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
+                  aria-hidden="true"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  ></path>
+                  <use href="/icons.svg#icon-check"></use>
                 </svg>
               </div>
 
@@ -261,13 +219,8 @@
                       <span
                         class="flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white"
                       >
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                          ></path>
+                        <svg class="h-4 w-4" aria-hidden="true">
+                          <use href="/icons.svg#icon-alert"></use>
                         </svg>
                         Vencida
                       </span>
@@ -277,13 +230,8 @@
                   <!-- Fechas -->
                   <div class="flex flex-wrap gap-3 text-xs text-gray-500">
                     <div class="flex items-center gap-1">
-                      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
+                      <svg class="h-4 w-4" aria-hidden="true">
+                        <use href="/icons.svg#icon-clock"></use>
                       </svg>
                       <span>Creada: {{ formatDateShort(task.createdAt) }}</span>
                     </div>
@@ -294,13 +242,8 @@
                         [class.text-red-600]="isOverdue()(task)"
                         [class.font-semibold]="isOverdue()(task)"
                       >
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                          ></path>
+                        <svg class="h-4 w-4" aria-hidden="true">
+                          <use href="/icons.svg#icon-calendar"></use>
                         </svg>
                         <span>Vence: {{ formatDateShort(task.dueDate) }}</span>
                       </div>
@@ -317,13 +260,8 @@
                 class="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:from-gray-300 disabled:to-gray-400 disabled:hover:scale-100"
                 (click)="startEditingTask(task)"
               >
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                  ></path>
+                <svg class="h-4 w-4" aria-hidden="true">
+                  <use href="/icons.svg#icon-edit"></use>
                 </svg>
                 <span class="hidden sm:inline">Editar</span>
               </button>
@@ -331,13 +269,8 @@
                 class="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
                 (click)="deleteTask(task.id)"
               >
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  ></path>
+                <svg class="h-4 w-4" aria-hidden="true">
+                  <use href="/icons.svg#icon-trash"></use>
                 </svg>
                 <span class="hidden sm:inline">Eliminar</span>
               </button>
@@ -359,13 +292,8 @@
               class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
               (click)="saveEditedTask()"
             >
-              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 13l4 4L19 7"
-                ></path>
+              <svg class="h-4 w-4" aria-hidden="true">
+                <use href="/icons.svg#icon-save"></use>
               </svg>
               <span>Guardar</span>
             </button>
@@ -373,13 +301,8 @@
               class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-500 to-gray-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
               (click)="cancelEditing()"
             >
-              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
+              <svg class="h-4 w-4" aria-hidden="true">
+                <use href="/icons.svg#icon-close"></use>
               </svg>
               <span>Cancelar</span>
             </button>
