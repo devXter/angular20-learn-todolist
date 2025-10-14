@@ -162,14 +162,15 @@
   }
 
   @for (task of filteredAndSortedTasks(); track task.id) {
+    @let taskIsOverdue = isOverdue(task);
     <div
       class="group rounded-2xl bg-white p-5 shadow-lg transition-all duration-300 hover:shadow-xl sm:p-6"
       [class.bg-gradient-to-r]="task.completed"
       [class.from-emerald-50]="task.completed"
       [class.to-teal-50]="task.completed"
-      [class.border-l-8]="isOverdue()(task)"
-      [class.border-red-500]="isOverdue()(task)"
-      [class.!bg-red-50]="isOverdue()(task)"
+      [class.border-l-8]="taskIsOverdue"
+      [class.border-red-500]="taskIsOverdue"
+      [class.!bg-red-50]="taskIsOverdue"
     >
       @if (!isEditing()(task.id)) {
         <!-- Vista Normal -->
@@ -215,7 +216,7 @@
                     </span>
 
                     <!-- Badge Vencida -->
-                    @if (isOverdue()(task)) {
+                    @if (taskIsOverdue) {
                       <span
                         class="flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white"
                       >
@@ -239,8 +240,8 @@
                     @if (task.dueDate) {
                       <div
                         class="flex items-center gap-1"
-                        [class.text-red-600]="isOverdue()(task)"
-                        [class.font-semibold]="isOverdue()(task)"
+                        [class.text-red-600]="taskIsOverdue"
+                        [class.font-semibold]="taskIsOverdue"
                       >
                         <svg class="h-4 w-4" aria-hidden="true">
                           <use href="/icons.svg#icon-calendar"></use>

@@ -2,6 +2,7 @@ import { Component, computed, inject, signal, Signal, WritableSignal } from '@an
 import { TaskManagement } from './services/task-management';
 import { Task } from './models/task';
 import { TaskFilter, TaskSortBy } from './models/task-filter';
+import { DateFormatter } from '../../core/utils/date-formatter';
 
 @Component({
   selector: 'app-task-manager',
@@ -11,7 +12,12 @@ import { TaskFilter, TaskSortBy } from './models/task-filter';
   styleUrl: './task-manager.css',
 })
 export class TaskManager {
+  readonly initialTab: TaskFilter = 'all';
+  readonly initialSort: TaskSortBy = 'dueDate';
+
+  // Inyección de dependencias
   private readonly taskManagementService: TaskManagement = inject(TaskManagement);
+  private readonly dateFormatter: DateFormatter = inject(DateFormatter);
 
   protected readonly allTasks: Signal<Task[]> = this.taskManagementService.allTasks;
   protected readonly remaining: Signal<number> = this.taskManagementService.remaining;
@@ -21,8 +27,8 @@ export class TaskManager {
   protected readonly editingTaskTitle: WritableSignal<string> = signal<string>('');
 
   // Nuevas señales para filtros y ordenamiento
-  protected readonly activeTab: WritableSignal<TaskFilter> = signal<TaskFilter>('all');
-  protected readonly sortBy: WritableSignal<TaskSortBy> = signal<TaskSortBy>('dueDate');
+  protected readonly activeTab: WritableSignal<TaskFilter> = signal<TaskFilter>(this.initialTab);
+  protected readonly sortBy: WritableSignal<TaskSortBy> = signal<TaskSortBy>(this.initialSort);
 
   protected readonly isEditing: Signal<(id: number) => boolean> = computed(
     (): ((id: number) => boolean) => {
@@ -46,18 +52,10 @@ export class TaskManager {
     return this.taskManagementService.getSortedTasks(filteredTasks, this.sortBy());
   });
 
-  // Función para verificar si una tarea está vencida
-  protected readonly isOverdue = computed((): ((task: Task) => boolean) => {
-    const today: Date = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    return (task: Task): boolean => {
-      if (task.completed || !task.dueDate) return false;
-      const dueDate: Date = new Date(task.dueDate);
-      dueDate.setHours(0, 0, 0, 0);
-      return dueDate < today;
-    };
-  });
+  // Función para verificar si una tarea está vencida (delegada a DateFormatter)
+  protected readonly isOverdue: (task: Task) => boolean = (task: Task): boolean => {
+    return this.dateFormatter.isOverdue(task);
+  };
 
   protected addTask(): void {
     const dueDate: Date | undefined = this.newTaskDueDate()
@@ -105,24 +103,12 @@ export class TaskManager {
     this.sortBy.set(sortBy);
   }
 
+  // Métodos de formateo delegados a DateFormatter
   protected formatDate(date: Date | undefined): string {
-    if (!date) return '';
-    const d: Date = new Date(date);
-    const options: Intl.DateTimeFormatOptions = {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    };
-    return d.toLocaleDateString('es-ES', options);
+    return this.dateFormatter.formatLong(date);
   }
 
   protected formatDateShort(date: Date | undefined): string {
-    if (!date) return '';
-    const d: Date = new Date(date);
-    const options: Intl.DateTimeFormatOptions = {
-      day: '2-digit',
-      month: 'short',
-    };
-    return d.toLocaleDateString('es-ES', options);
+    return this.dateFormatter.formatShort(date);
   }
 }

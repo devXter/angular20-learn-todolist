@@ -10,10 +10,12 @@ import {
 import { Task } from '../models/task';
 import { TaskSortBy } from '../models/task-filter';
 import { LocalStorage } from '../../../core/services/local-storage';
+import { DateFormatter } from '../../../core/utils/date-formatter';
 
 @Injectable()
 export class TaskManagement {
   private readonly localStorageService = inject(LocalStorage);
+  private readonly dateFormatter = inject(DateFormatter);
   private readonly TASKS_STORAGE_KEY = 'tasks';
 
   private readonly tasks: WritableSignal<Task[]> = signal<Task[]>(
@@ -59,14 +61,7 @@ export class TaskManagement {
   });
 
   readonly overdueTasks: Signal<Task[]> = computed((): Task[] => {
-    const today: Date = new Date();
-    today.setHours(0, 0, 0, 0);
-    return this.tasks().filter((task: Task): boolean => {
-      if (task.completed || !task.dueDate) return false;
-      const dueDate: Date = new Date(task.dueDate);
-      dueDate.setHours(0, 0, 0, 0);
-      return dueDate < today;
-    });
+    return this.tasks().filter((task: Task): boolean => this.dateFormatter.isOverdue(task));
   });
 
   constructor() {
