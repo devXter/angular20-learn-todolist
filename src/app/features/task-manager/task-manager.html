@@ -119,7 +119,7 @@
 <section class="mb-6 rounded-2xl bg-white p-4 shadow-xl sm:p-6">
   <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
     <!-- Tabs -->
-    <div class="flex gap-2 rounded-xl bg-gray-100 p-1">
+    <div class="flex w-full justify-around self-center rounded-xl bg-gray-100 p-1">
       <button
         class="rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200"
         [class.bg-white]="activeTab() === 'all'"
@@ -156,7 +156,7 @@
     </div>
 
     <!-- Sort Selector -->
-    <div class="flex items-center gap-2 self-end">
+    <div class="flex items-center justify-end gap-2">
       <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
           stroke-linecap="round"
