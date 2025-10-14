@@ -8,6 +8,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { Task } from '../models/task';
+import { TaskSortBy } from '../models/task-filter';
 import { LocalStorage } from '../../../core/services/local-storage';
 
 @Injectable()
@@ -139,36 +140,24 @@ export class TaskManagement {
     });
   }
 
-  getSortedTasks(tasks: Task[], sortBy: 'dueDate' | 'createdAt' | 'title'): Task[] {
-    const tasksCopy: Task[] = [...tasks];
+  // Estrategias de ordenamiento usando Strategy Pattern
+  private readonly sortStrategies: Record<TaskSortBy, (a: Task, b: Task) => number> = {
+    dueDate: (a: Task, b: Task): number => {
+      // Tareas sin fecha de vencimiento van al final
+      if (!a.dueDate && !b.dueDate) return 0;
+      if (!a.dueDate) return 1;
+      if (!b.dueDate) return -1;
 
-    switch (sortBy) {
-      case 'dueDate':
-        return tasksCopy.sort((a: Task, b: Task): number => {
-          // Tareas sin fecha de vencimiento van al final
-          if (!a.dueDate && !b.dueDate) return 0;
-          if (!a.dueDate) return 1;
-          if (!b.dueDate) return -1;
+      return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+    },
+    createdAt: (a: Task, b: Task): number => {
+      // Más recientes primero
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    },
+    title: (a: Task, b: Task): number => a.title.localeCompare(b.title, 'es'),
+  };
 
-          const dateA: Date = new Date(a.dueDate);
-          const dateB: Date = new Date(b.dueDate);
-          return dateA.getTime() - dateB.getTime();
-        });
-
-      case 'createdAt':
-        return tasksCopy.sort((a: Task, b: Task): number => {
-          const dateA: Date = new Date(a.createdAt);
-          const dateB: Date = new Date(b.createdAt);
-          return dateB.getTime() - dateA.getTime(); // Más recientes primero
-        });
-
-      case 'title':
-        return tasksCopy.sort((a: Task, b: Task): number => {
-          return a.title.localeCompare(b.title, 'es');
-        });
-
-      default:
-        return tasksCopy;
-    }
+  getSortedTasks(tasks: Task[], sortBy: TaskSortBy): Task[] {
+    return [...tasks].sort(this.sortStrategies[sortBy]);
   }
 }

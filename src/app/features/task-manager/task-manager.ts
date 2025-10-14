@@ -1,6 +1,7 @@
 import { Component, computed, inject, signal, Signal, WritableSignal } from '@angular/core';
 import { TaskManagement } from './services/task-management';
 import { Task } from './models/task';
+import { TaskFilter, TaskSortBy } from './models/task-filter';
 
 @Component({
   selector: 'app-task-manager',
@@ -20,8 +21,8 @@ export class TaskManager {
   protected readonly editingTaskTitle: WritableSignal<string> = signal<string>('');
 
   // Nuevas señales para filtros y ordenamiento
-  protected readonly activeTab: WritableSignal<'all' | 'active' | 'completed'> = signal('all');
-  protected readonly sortBy: WritableSignal<'dueDate' | 'createdAt' | 'title'> = signal('dueDate');
+  protected readonly activeTab: WritableSignal<TaskFilter> = signal<TaskFilter>('all');
+  protected readonly sortBy: WritableSignal<TaskSortBy> = signal<TaskSortBy>('dueDate');
 
   protected readonly isEditing: Signal<(id: number) => boolean> = computed(
     (): ((id: number) => boolean) => {
@@ -30,24 +31,19 @@ export class TaskManager {
     },
   );
 
+  // Strategy map para filtros de tareas
+  private readonly taskFilterStrategies: Record<TaskFilter, Signal<Task[]>> = {
+    all: this.taskManagementService.allTasks,
+    active: this.taskManagementService.activeTasks,
+    completed: this.taskManagementService.completedTasks,
+  };
+
   // Señal computada para tareas filtradas y ordenadas
   protected readonly filteredAndSortedTasks: Signal<Task[]> = computed((): Task[] => {
-    let tasks: Task[] = [];
+    const activeFilter: TaskFilter = this.activeTab();
+    const filteredTasks: Task[] = this.taskFilterStrategies[activeFilter]();
 
-    // Filtrar según el tab activo
-    switch (this.activeTab()) {
-      case 'active':
-        tasks = this.taskManagementService.activeTasks();
-        break;
-      case 'completed':
-        tasks = this.taskManagementService.completedTasks();
-        break;
-      default:
-        tasks = this.taskManagementService.allTasks();
-    }
-
-    // Ordenar según el criterio seleccionado
-    return this.taskManagementService.getSortedTasks(tasks, this.sortBy());
+    return this.taskManagementService.getSortedTasks(filteredTasks, this.sortBy());
   });
 
   // Función para verificar si una tarea está vencida
@@ -101,11 +97,11 @@ export class TaskManager {
     this.editingTaskTitle.set('');
   }
 
-  protected setActiveTab(tab: 'all' | 'active' | 'completed'): void {
+  protected setActiveTab(tab: TaskFilter): void {
     this.activeTab.set(tab);
   }
 
-  protected setSortBy(sortBy: 'dueDate' | 'createdAt' | 'title'): void {
+  protected setSortBy(sortBy: TaskSortBy): void {
     this.sortBy.set(sortBy);
   }
 
