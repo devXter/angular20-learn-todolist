@@ -1,7 +1,10 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/assets/*", "/*.{css,js,png,jpg,jpeg,gif,svg,ico,woff,woff2,ttf,eot}"]
+    "exclude": [
+      "/assets/*",
+      "/*.{css,js,png,jpg,jpeg,gif,svg,ico,woff,woff2,ttf,eot}"
+    ]
   },
   "routes": [],
   "responseOverrides": {
@@ -9,9 +12,6 @@
       "rewrite": "/index.html",
       "statusCode": 200
     }
-  },
-  "globalHeaders": {
-    "cache-control": "no-cache, no-store, must-revalidate"
   },
   "mimeTypes": {
     ".json": "application/json",
