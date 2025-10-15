@@ -1,0 +1,37 @@
+<!-- Empty State -->
+@if (tasks().length === 0) {
+  <div class="rounded-2xl bg-white p-12 text-center shadow-xl">
+    <div class="mb-4 inline-block rounded-full bg-gray-100 p-6">
+      <svg class="h-16 w-16 text-gray-400" aria-hidden="true">
+        <use href="/icons.svg#icon-empty-box"></use>
+      </svg>
+    </div>
+    <h3 class="mb-2 text-xl font-bold text-gray-900">No hay tareas</h3>
+    <p class="text-gray-500">¡Comienza agregando tu primera tarea arriba!</p>
+  </div>
+}
+
+<!-- Task Items -->
+@for (task of tasks(); track task.id) {
+  @let taskIsOverdue = isTaskOverdue(task);
+  <div
+    class="mb-2 rounded-2xl bg-white p-5 shadow-lg transition-all duration-300 hover:shadow-xl sm:p-6"
+    [class.bg-gradient-to-r]="task.completed"
+    [class.from-emerald-50]="task.completed"
+    [class.to-teal-50]="task.completed"
+    [class.border-l-8]="taskIsOverdue"
+    [class.border-red-500]="taskIsOverdue"
+    [class.!bg-red-50]="taskIsOverdue"
+  >
+    <app-task-item
+      [task]="task"
+      [isEditing]="editingTaskId() === task.id"
+      [isOverdue]="taskIsOverdue"
+      (toggle)="onTaskToggle($event)"
+      (delete)="onTaskDelete($event)"
+      (edit)="onTaskEditStart($event)"
+      (save)="onTaskSave($event)"
+      (cancel)="onEditCancel()"
+    ></app-task-item>
+  </div>
+}

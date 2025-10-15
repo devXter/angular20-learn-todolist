@@ -1,0 +1,66 @@
+<!-- Add Task Card -->
+<section
+  class="mb-6 rounded-2xl bg-white p-6 shadow-xl transition-all duration-300 hover:shadow-2xl sm:p-8"
+>
+  <label class="flex flex-col gap-4">
+    <div class="sel flex items-center gap-2">
+      <svg class="h-6 w-6 text-indigo-600" aria-hidden="true">
+        <use href="/icons.svg#icon-plus"></use>
+      </svg>
+      <span class="text-xl font-bold text-gray-800">Nueva Tarea</span>
+    </div>
+
+    <div class="flex w-full flex-col gap-3">
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <div class="flex-1 sm:self-end">
+          <input
+            type="text"
+            placeholder="¿Qué necesitas hacer hoy?"
+            class="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 focus:outline-none"
+            [value]="title()"
+            (input)="title.set($any($event.target).value)"
+            (keyup.enter)="onSubmit()"
+          />
+        </div>
+
+        <div class="relative flex-1 sm:w-56 sm:flex-none">
+          <label class="flex flex-col gap-2">
+            <span class="flex items-center gap-2 text-sm font-medium text-gray-700">
+              <svg class="h-4 w-4 text-indigo-600" aria-hidden="true">
+                <use href="/icons.svg#icon-calendar"></use>
+              </svg>
+              Fecha de vencimiento
+            </span>
+            <input
+              type="date"
+              class="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 focus:outline-none"
+              [value]="dueDate()"
+              (input)="dueDate.set($any($event.target).value)"
+              (keyup.enter)="onSubmit()"
+            />
+          </label>
+        </div>
+
+        <button
+          class="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 sm:h-14 sm:self-end"
+          [disabled]="!isFormValid()"
+          (click)="onSubmit()"
+        >
+          <svg
+            class="h-5 w-5 transition-transform duration-200 group-hover:rotate-90"
+            aria-hidden="true"
+          >
+            <use href="/icons.svg#icon-plus"></use>
+          </svg>
+          <span class="hidden sm:inline">Agregar</span>
+        </button>
+      </div>
+      <p class="text-sm text-gray-500">
+        <span class="inline sm:hidden">💡 La fecha es opcional</span>
+        <span class="hidden sm:inline"
+          >💡 Puedes agregar una fecha de vencimiento opcional para tu tarea</span
+        >
+      </p>
+    </div>
+  </label>
+</section>

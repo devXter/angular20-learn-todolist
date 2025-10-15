@@ -1,0 +1,138 @@
+@if (!isEditing()) {
+  <!-- Normal View -->
+  <div class="flex flex-col">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <label class="flex flex-1 cursor-pointer items-start gap-4">
+        <input
+          type="checkbox"
+          class="peer sr-only"
+          [checked]="task().completed"
+          (change)="onToggle()"
+        />
+
+        <!-- Custom Checkbox -->
+        <div
+          class="relative mt-1 h-6 w-6 shrink-0 rounded-lg border-2 transition-all duration-200"
+          [class.border-gray-300]="!task().completed"
+          [class.bg-white]="!task().completed"
+          [class.border-emerald-500]="task().completed"
+          [class.bg-emerald-500]="task().completed"
+        >
+          <svg
+            class="absolute inset-0 m-auto h-4 w-4 text-white transition-all duration-200"
+            [class.scale-0]="!task().completed"
+            [class.scale-100]="task().completed"
+            aria-hidden="true"
+          >
+            <use href="/icons.svg#icon-check"></use>
+          </svg>
+        </div>
+
+        <div class="flex-1">
+          <div class="flex flex-col gap-2">
+            <div class="flex items-start gap-2">
+              <span
+                class="flex-1 text-lg transition-all duration-200"
+                [class.text-gray-900]="!task().completed"
+                [class.font-medium]="!task().completed"
+                [class.text-emerald-700]="task().completed"
+                [class.line-through]="task().completed"
+              >
+                {{ task().title }}
+              </span>
+
+              <!-- Badge Vencida -->
+              @if (isOverdue()) {
+                <span
+                  class="flex items-center gap-1 rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white"
+                >
+                  <svg class="h-4 w-4" aria-hidden="true">
+                    <use href="/icons.svg#icon-alert"></use>
+                  </svg>
+                  Vencida
+                </span>
+              }
+            </div>
+
+            <!-- Fechas -->
+            <div class="flex flex-wrap gap-3 text-xs text-gray-500">
+              <div class="flex items-center gap-1">
+                <svg class="h-4 w-4" aria-hidden="true">
+                  <use href="/icons.svg#icon-clock"></use>
+                </svg>
+                <span>Creada: {{ formatDateShort(task().createdAt) }}</span>
+              </div>
+
+              @if (task().dueDate) {
+                <div
+                  class="flex items-center gap-1"
+                  [class.text-red-600]="isOverdue()"
+                  [class.font-semibold]="isOverdue()"
+                >
+                  <svg class="h-4 w-4" aria-hidden="true">
+                    <use href="/icons.svg#icon-calendar"></use>
+                  </svg>
+                  <span>Vence: {{ formatDateShort(task().dueDate) }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </label>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-2 sm:ml-4">
+        <button
+          [disabled]="task().completed"
+          class="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:from-gray-300 disabled:to-gray-400 disabled:hover:scale-100"
+          (click)="onEdit()"
+        >
+          <svg class="h-4 w-4" aria-hidden="true">
+            <use href="/icons.svg#icon-edit"></use>
+          </svg>
+          <span class="hidden sm:inline">Editar</span>
+        </button>
+        <button
+          class="group/btn flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-500 to-pink-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+          (click)="onDelete()"
+        >
+          <svg class="h-4 w-4" aria-hidden="true">
+            <use href="/icons.svg#icon-trash"></use>
+          </svg>
+          <span class="hidden sm:inline">Eliminar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+} @else {
+  <!-- Edit Mode -->
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <input
+      type="text"
+      class="flex-1 rounded-xl border-2 border-indigo-300 bg-white px-4 py-3 text-gray-900 transition-all duration-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 focus:outline-none"
+      [value]="editTitle()"
+      (input)="onEditTitleInput($event)"
+      (keyup.enter)="onSave()"
+    />
+    <div class="flex gap-2">
+      <button
+        class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+        (click)="onSave()"
+      >
+        <svg class="h-4 w-4" aria-hidden="true">
+          <use href="/icons.svg#icon-save"></use>
+        </svg>
+        <span>Guardar</span>
+      </button>
+      <button
+        class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-500 to-gray-600 px-4 py-2 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
+        (click)="onCancel()"
+      >
+        <svg class="h-4 w-4" aria-hidden="true">
+          <use href="/icons.svg#icon-close"></use>
+        </svg>
+        <span>Cancelar</span>
+      </button>
+    </div>
+  </div>
+}

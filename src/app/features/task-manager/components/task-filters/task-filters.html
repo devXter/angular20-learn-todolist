@@ -1,0 +1,56 @@
+<!-- Controls Bar -->
+<section class="mb-6 rounded-2xl bg-white p-4 shadow-xl sm:p-6">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <!-- Tabs -->
+    <div
+      class="flex w-full justify-around self-center rounded-xl bg-gray-100 p-1 sm:w-auto sm:min-w-[400px]"
+    >
+      <button
+        type="button"
+        (click)="onTabClick('all')"
+        class="flex-1 rounded-lg px-6 py-2.5 text-sm font-medium text-gray-700 transition-all duration-200 hover:text-indigo-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:flex-initial"
+        [class.bg-white]="activeTab() === 'all'"
+        [class.text-indigo-600]="activeTab() === 'all'"
+        [class.shadow-md]="activeTab() === 'all'"
+      >
+        Todas
+      </button>
+      <button
+        type="button"
+        (click)="onTabClick('active')"
+        class="flex-1 rounded-lg px-6 py-2.5 text-sm font-medium text-gray-700 transition-all duration-200 hover:text-indigo-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:flex-initial"
+        [class.bg-white]="activeTab() === 'active'"
+        [class.text-indigo-600]="activeTab() === 'active'"
+        [class.shadow-md]="activeTab() === 'active'"
+      >
+        Activas
+      </button>
+      <button
+        type="button"
+        (click)="onTabClick('completed')"
+        class="flex-1 rounded-lg px-6 py-2.5 text-sm font-medium text-gray-700 transition-all duration-200 hover:text-indigo-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:flex-initial"
+        [class.bg-white]="activeTab() === 'completed'"
+        [class.text-indigo-600]="activeTab() === 'completed'"
+        [class.shadow-md]="activeTab() === 'completed'"
+      >
+        Completadas
+      </button>
+    </div>
+
+    <!-- Sort Selector -->
+    <div class="flex items-center justify-end gap-2">
+      <svg class="h-5 w-5 text-gray-600" aria-hidden="true">
+        <use href="/icons.svg#icon-sort"></use>
+      </svg>
+      <select
+        [value]="sortBy()"
+        (change)="onSortChange($event)"
+        class="cursor-pointer rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:border-indigo-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+      >
+        <option value="dueDate">Fecha de vencimiento</option>
+        <option value="createdAt">Fecha de creación</option>
+        <option value="title">Alfabético</option>
+      </select>
+    </div>
+  </div>
+</section>
