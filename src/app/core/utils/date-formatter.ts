@@ -52,6 +52,15 @@ export class DateFormatter {
   }
 
   /**
+   * Convierte de forma segura un valor Date o string a Date
+   * Útil para migrar datos de localStorage donde las fechas pueden ser strings
+   */
+  parseDate(value: Date | string | undefined): Date | undefined {
+    if (!value) return undefined;
+    return typeof value === 'string' ? new Date(value) : value;
+  }
+
+  /**
    * Verifica si una tarea está vencida
    */
   isOverdue(task: Task): boolean {

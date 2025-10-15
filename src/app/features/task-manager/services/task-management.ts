@@ -72,24 +72,13 @@ export class TaskManagement {
   }
 
   private migrateTasks(tasks: Task[]): Task[] {
-    return tasks.map((task: Task): Task => {
-      const migratedTask: Task = { ...task };
-
-      // Convertir strings de fecha a objetos Date si es necesario
-      if (migratedTask.createdAt && typeof migratedTask.createdAt === 'string') {
-        migratedTask.createdAt = new Date(migratedTask.createdAt);
-      }
-      if (migratedTask.dueDate && typeof migratedTask.dueDate === 'string') {
-        migratedTask.dueDate = new Date(migratedTask.dueDate);
-      }
-
-      // Si no tiene createdAt, asignar fecha actual
-      if (!migratedTask.createdAt) {
-        migratedTask.createdAt = new Date();
-      }
-
-      return migratedTask;
-    });
+    return tasks.map(
+      (task: Task): Task => ({
+        ...task,
+        createdAt: this.dateFormatter.parseDate(task.createdAt) ?? new Date(),
+        dueDate: this.dateFormatter.parseDate(task.dueDate),
+      }),
+    );
   }
 
   addTask(newTitle: string, dueDate?: Date): void {
