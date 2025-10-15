@@ -59,7 +59,7 @@ export class TaskManager {
 
   protected addTask(): void {
     const dueDate: Date | undefined = this.newTaskDueDate()
-      ? new Date(this.newTaskDueDate())
+      ? this.dateFormatter.parseDateInput(this.newTaskDueDate())
       : undefined;
 
     this.taskManagementService.addTask(this.newTaskTitle(), dueDate);

@@ -44,6 +44,14 @@ export class DateFormatter {
   }
 
   /**
+   * Parsea un string de input type="date" (YYYY-MM-DD) a Date local
+   * Evita problemas de timezone al agregar la hora local explícitamente
+   */
+  parseDateInput(dateString: string): Date {
+    return new Date(dateString + 'T00:00:00');
+  }
+
+  /**
    * Verifica si una tarea está vencida
    */
   isOverdue(task: Task): boolean {
